@@ -28,11 +28,13 @@ resource "aws_lb_target_group" "alb_target_group" {
 
   health_check {
     protocol            = "HTTP"
-    path                = "/"
+    path                = "/health"
+    port                = "traffic-port"
     interval            = 30
-    timeout             = 5
-    healthy_threshold   = 2
+    timeout             = 20
+    healthy_threshold   = 3
     unhealthy_threshold = 5
+    matcher             = "200"
   }
 
   tags = {
@@ -75,17 +77,3 @@ resource "aws_lb_listener" "https_listener" {
   }
 }
 
-# -----------------------------------
-# Route53 Record (ALB)
-# -----------------------------------
-resource "aws_route53_record" "alb_record" {
-  zone_id = aws_route53_zone.route53_zone.zone_id
-  name    = "${var.environment}.${var.domain}" # dev.example.com / prod.example.com
-  type    = "A"
-
-  alias {
-    name                   = aws_lb.alb.dns_name
-    zone_id                = aws_lb.alb.zone_id
-    evaluate_target_health = true
-  }
-}

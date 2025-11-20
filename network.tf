@@ -22,7 +22,7 @@ resource "aws_subnet" "public_subnet_1a" {
   vpc_id                  = aws_vpc.vpc.id
   availability_zone       = "ap-northeast-1a"
   cidr_block              = "192.168.1.0/24"
-  map_public_ip_on_launch = false # Private Subnet for EC2
+  map_public_ip_on_launch = true # Private Subnet for EC2
 
   tags = {
     Name    = "${var.project}-${var.environment}-public-subnet-1a"

@@ -51,22 +51,13 @@ resource "aws_security_group" "app_sg" {
     security_groups = [aws_security_group.web_sg.id]
   }
 
-  # Fargate → S3 のアウトバウンド
+  # Fargate タスクが外部（ECR・SSM・S3・API）へ通信するためのアウトバウンド
   egress {
-    description     = "Allow access to S3"
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    prefix_list_ids = [local.s3_prefix_list_id]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-
-  # アプリケーションからの外向き通信（APIやS3など）
-  # egress {
-  #   from_port   = 0
-  #   to_port     = 0
-  #   protocol    = "-1"
-  #   cidr_blocks = ["0.0.0.0/0"]
-  # }
 
   tags = {
     Name = "${var.project}-${var.environment}-app-sg"

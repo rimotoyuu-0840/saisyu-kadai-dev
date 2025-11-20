@@ -23,11 +23,12 @@ resource "aws_ssm_parameter" "mysql_database" {
 resource "aws_ssm_parameter" "mysql_username" {
   name  = "/${var.project}/${var.environment}/MYSQL_USERNAME"
   type  = "SecureString"
-  value = aws_db_instance.mysql_standalone.username
+  value = "admin"
 }
 
 resource "aws_ssm_parameter" "mysql_password" {
-  name  = "/${var.project}/${var.environment}/MYSQL_PASSWORD"
-  type  = "SecureString"
-  value = aws_db_instance.mysql_standalone.password
+  name      = "/${var.project}/${var.environment}/MYSQL_PASSWORD"
+  type      = "SecureString"
+  value     = random_string.db_password.result
+  overwrite = true
 }

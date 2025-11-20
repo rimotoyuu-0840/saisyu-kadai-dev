@@ -67,13 +67,13 @@ resource "aws_db_instance" "mysql_standalone" {
   storage_encrypted     = false
 
   multi_az               = false
-  availability_zone = "ap-northeast-1a"
+  availability_zone      = "ap-northeast-1a"
   db_subnet_group_name   = aws_db_subnet_group.mysql_standalone_subnetgroup.name
   vpc_security_group_ids = [aws_security_group.db_sg.id]
   publicly_accessible    = false
   port                   = 3306
 
-  db_name = var.db_name
+  db_name              = var.db_name
   parameter_group_name = aws_db_parameter_group.mysql_standalone_parametergroup.name
   option_group_name    = aws_db_option_group.mysql_standalone_optiongroup.name
 

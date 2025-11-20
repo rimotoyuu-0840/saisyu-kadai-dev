@@ -47,22 +47,22 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
 # -----------------------------------
 # Bucket Policy（CloudFront OAI許可）
 # -----------------------------------
-data "aws_iam_policy_document" "s3_policy" {
-  statement {
-    sid    = "AllowCloudFrontAccess"
-    effect = "Allow"
+# data "aws_iam_policy_document" "s3_policy" {
+#   statement {
+#     sid    = "AllowCloudFrontAccess"
+#     effect = "Allow"
 
-    principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.s3_origin_identity.iam_arn]
-    }
+#     principals {
+#       type        = "AWS"
+#       identifiers = [aws_cloudfront_origin_access_identity.s3_origin_identity.iam_arn]
+#     }
 
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.s3_static_bucket.arn}/*"]
-  }
-}
+#     actions   = ["s3:GetObject"]
+#     resources = ["${aws_s3_bucket.s3_static_bucket.arn}/*"]
+#   }
+# }
 
-resource "aws_s3_bucket_policy" "s3_policy" {
-  bucket = aws_s3_bucket.s3_static_bucket.id
-  policy = data.aws_iam_policy_document.s3_policy.json
-}
+# resource "aws_s3_bucket_policy" "s3_policy" {
+#   bucket = aws_s3_bucket.s3_static_bucket.id
+#   policy = data.aws_iam_policy_document.s3_policy.json
+# }

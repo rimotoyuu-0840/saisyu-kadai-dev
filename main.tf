@@ -25,11 +25,11 @@ provider "aws" {
   region  = "ap-northeast-1"
 }
 
-provider "aws" {
-  alias   = "virginia"
-  profile = "terraform"
-  region  = "us-east-1"
-}
+# provider "aws" {
+#   alias   = "virginia"
+#   profile = "terraform"
+#   region  = "us-east-1"
+# }
 
 # -----------------------------------
 #Variables
@@ -46,6 +46,10 @@ variable "domain" {
   type = string
 }
 
+variable "subdomain" {
+  type = string
+}
+
 variable "db_name" {
-  type = string  
+  type = string
 }

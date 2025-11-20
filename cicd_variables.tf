@@ -15,7 +15,3 @@ variable "github_oauth_token" {
   type      = string
   sensitive = true
 }
-
-variable "ecr_repository_url" {
-  type = string
-}

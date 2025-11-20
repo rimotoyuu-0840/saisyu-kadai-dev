@@ -1,19 +1,13 @@
 # ---------------------------------
 # Route53
 # ---------------------------------
-resource "aws_route53_zone" "route53_zone" {
+data "aws_route53_zone" "route53_zone" {
   name = "${var.domain}."
-
-  tags = {
-    Name    = "${var.project}-${var.environment}-domain"
-    Project = var.project
-    Env     = var.environment
-  }
 }
 
-resource "aws_route53_record" "route53_record" {
-  zone_id = aws_route53_zone.route53_zone.zone_id
-  name    = "dev-elb.${var.domain}"
+resource "aws_route53_record" "alb_record" {
+  zone_id = data.aws_route53_zone.route53_zone.zone_id
+  name    = "${var.subdomain}.${var.domain}"
   type    = "A"
 
   alias {
